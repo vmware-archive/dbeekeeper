@@ -1,0 +1,48 @@
+To install pip, do:
+
+    curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+    sudo python get-pip.py
+
+Verify that you have pip 1.4 or later:
+
+    pip --version
+
+To install virtualenv and virtualenvwrapper, do:
+
+    sudo pip install virtualenv virtualenvwrapper
+
+Add these 2 lines to your .bashrc/.zshrc:
+
+    export WORKON_HOME=$HOME/.virtualenvs
+    source /usr/local/bin/virtualenvwrapper.sh
+
+To create a virtualenv, do:
+
+    mkvirtualenv myenv
+
+To install dependencies to the virtualenv, do:
+
+    pip install -e .
+
+from the directory this file is in.
+
+To list all the sitepackages in the virtualenv, do:
+
+    lssitepackages
+
+To run tests, do:
+
+    python setup.py test
+
+To get out of the virtualenv, do:
+
+    deactivate
+
+To see the list of virtualenvs, do:
+
+    workon
+
+To get back into the virtualenv, do:
+
+    workon myenv
+
