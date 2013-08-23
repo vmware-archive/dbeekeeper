@@ -5,8 +5,8 @@ python:
   - "3.3"
 
 # command to install dependencies
-install: "pip install -e ."
+install: "make depend"
 
 # command to run tests
-script: "python setup.py test"
+script: "make check"
 
