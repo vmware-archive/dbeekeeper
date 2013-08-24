@@ -7,6 +7,7 @@ import sys
 from optparse import OptionParser
 from kazoo.client import KazooClient
 
+
 class Operation():
     create = "create"
     get = "get"
@@ -14,20 +15,23 @@ class Operation():
     delete = "delete"
     NOT_SUPPORT_MSG = "NOT SUPPORTED"
 
+
 def timed(f):
-  def wrapper(*args, **kwargs):
-    start = time.time()
-    msg = f(*args, **kwargs)
-    elapsed = (time.time() - start) * 1000
-    if msg.find(Operation.NOT_SUPPORT_MSG) != -1:
-        print "%s" % msg
-    else:
-        print "%s took %8d ms (%5d/sec)" % \
-              (msg, int(elapsed), kwargs["count"] / (elapsed / 1000))
-  return wrapper
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        msg = f(*args, **kwargs)
+        elapsed = (time.time() - start) * 1000
+        if msg.find(Operation.NOT_SUPPORT_MSG) != -1:
+            print "%s" % msg
+        else:
+            print "%s took %8d ms (%5d/sec)" % \
+                  (msg, int(elapsed), kwargs["count"] / (elapsed / 1000))
+    return wrapper
+
 
 def child_path(root, i):
     return "%s/session_%d" % (root, i)
+
 
 @timed
 def do_operation(op, s, root, async, batch_size, count,
@@ -56,6 +60,7 @@ def do_operation(op, s, root, async, batch_size, count,
                 elif op == Operation.delete:
                     s.delete(child_path(root, j))
         for r in async_results:
+            # is this the right way to know an async request is complete?
             r.get()
     else:
         batches = (count - 1) / batch_size + 1
@@ -81,6 +86,7 @@ def do_operation(op, s, root, async, batch_size, count,
             else:
                 t.commit()
         for r in async_results:
+            # is this the right way to know an async request is complete?
             r.get()
 
     if ephemeral:
@@ -93,6 +99,7 @@ def do_operation(op, s, root, async, batch_size, count,
 
     return "%5s %6s %8d %10s znodes batch size %5d " % \
            ("async" if async else "sync", op, count, node_type, batch_size)
+
 
 def evaluation(s, root, data, options):
     # create znodes (permanent)
@@ -127,6 +134,7 @@ def evaluation(s, root, data, options):
     do_operation(Operation.delete, s, root, options.async,
                  options.batch_size, count=options.count)
 
+
 def parse_options(args):
     parser = OptionParser(usage="usage: %prog [options]")
     parser.add_option("", "--server", dest="server", default="localhost:2181",
@@ -151,6 +159,7 @@ def parse_options(args):
                       action="store_true", dest="verbose", default=False,
                       help="verbose logging")
     return parser.parse_args(args)
+
 
 def main():
     (options, args) = parse_options(sys.argv[1:])
