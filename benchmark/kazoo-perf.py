@@ -52,13 +52,13 @@ def do_operation(op, s, root, async, batch_size, count,
                 async_results.append(r)
             else:
                 if op == Operation.create:
-                    s.create(child_path(root, j), data, ephemeral=ephemeral)
+                    s.create(child_path(root, i), data, ephemeral=ephemeral)
                 elif op == Operation.get:
-                    s.get(child_path(root, j))
+                    s.get(child_path(root, i))
                 elif op == Operation.set:
-                    s.set(child_path(root, j), data)
+                    s.set(child_path(root, i), data)
                 elif op == Operation.delete:
-                    s.delete(child_path(root, j))
+                    s.delete(child_path(root, i))
         for r in async_results:
             # is this the right way to know an async request is complete?
             r.get()
@@ -89,13 +89,10 @@ def do_operation(op, s, root, async, batch_size, count,
             # is this the right way to know an async request is complete?
             r.get()
 
-    if ephemeral:
-        node_type = "ephemeral"
-    else:
-        node_type = "permanent"
-
-    if op == Operation.get or op == Operation.set:
-        node_type = ""
+    # only print node type for creation operation
+    node_type = ""
+    if op == Operation.create:
+        node_type = "ephemeral" if ephemeral else "permanent"
 
     return "%5s %6s %8d %10s znodes batch size %5d " % \
            ("async" if async else "sync", op, count, node_type, batch_size)
