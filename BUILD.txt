@@ -1,3 +1,20 @@
+repository configuration
+============================
+
+1) Clone the repo: git clone git@github.com:vmware/dbeekeeper.git
+2) Configure the repo:
+
+    git config user.name "your name"
+    git config user.email "your@email.com"
+    git config push.default current
+
+build configuration
+============================
+To install hub, do:
+
+    sudo curl http://hub.github.com/standalone -sLo /usr/bin/hub
+    sudo chmod +x /usr/bin/hub
+
 To install pip, do:
 
     curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
@@ -22,7 +39,7 @@ To create a virtualenv, do:
 
 To install dependencies to the virtualenv, do:
 
-    pip install -e .
+    make depend
 
 from the directory this file is in.
 
@@ -32,7 +49,7 @@ To list all the sitepackages in the virtualenv, do:
 
 To run tests, do:
 
-    python setup.py test
+    make check
 
 To get out of the virtualenv, do:
 
@@ -45,4 +62,32 @@ To see the list of virtualenvs, do:
 To get back into the virtualenv, do:
 
     workon myenv
+
+
+making changes
+============================
+1) create a branch
+
+    git checkout -b myfeature
+
+2) make changes, commit to local repo, push to remote repo.
+
+    # ... make changes ...
+    make check
+    git commit
+    git push
+
+3) create a pull request
+
+    hub pull-request -h vmware:myfeature
+
+4) verify that the build passed
+
+    https://travis-ci.org/vmware/dbeekeeper/pull_requests
+
+5) review and resolve the pull request.
+
+6) delete the remote branch when you are done with it:
+
+    git push origin :myfeature
 
