@@ -79,7 +79,7 @@ making changes
 
 3) create a pull request
 
-    hub pull-request -h vmware:myfeature
+    hub pull-request -h vmware:myfeature [-i github_outstanding_issue_number]
 
 4) verify that the build passed
 
