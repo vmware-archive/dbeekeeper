@@ -1,0 +1,12 @@
+To run kazoo-perf.py, you need to install kazoo and
+../setup.py helps to do this
+
+To run zkpy-perf.py, you need to install zkpython as following
+- Downlod zookeeper tar ball and untar it
+- cd  zookeeper-x.x.x/src/c
+- ./configure
+- make && sudo make install
+- sudo ldconfig
+- cd zookeeper-x.x.x/src/contrib/zkpython
+- ant compile
+- sudo ant install
