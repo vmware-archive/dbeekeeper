@@ -13,5 +13,5 @@
 # limitations under the License.
 
 
-from error import ClientError
-from error import DbeeError
+from .error import ClientError
+from .error import DbeeError
