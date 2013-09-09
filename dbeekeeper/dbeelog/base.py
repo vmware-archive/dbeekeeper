@@ -20,13 +20,17 @@ class Base(object):
     """Abstract base class for distributed transaction log, or 'dbeelog'."""
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, client_id, min_checkpoints=3):
+    def __init__(self, dbeelog_id, client_id, min_checkpoints=3):
         """Constructor
 
         Classes that inherit from this class must call this method from their
         constructors.
 
         Args:
+            dbeelog_id
+                A string that uniquely identifies this dbeelog within a
+                dbeekeeper instance.
+
             client_id:
                 A string that uniquely identifies the client within this
                 dbeelog. The caller is responsible for ensuring the uniqueness.
@@ -56,12 +60,17 @@ class Base(object):
                     client4 => transaction6
                     client5 => transaction4
         """
+        self._dbeelog_id = dbeelog_id
         self._client_id = client_id
         self._min_checkpoints = min_checkpoints
 
     @property
+    def dbeelog_id(self):
+        return self._dbeelog_id
+
+    @property
     def client_id(self):
-        return self._clientid
+        return self._client_id
 
     @property
     def min_checkpoints(self):
