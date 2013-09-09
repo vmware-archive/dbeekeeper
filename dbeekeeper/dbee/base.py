@@ -16,7 +16,7 @@
 import abc
 
 
-class Base(Exception):
+class Base(object):
     """Abstract base class for dbeekeeper local storage, or 'dbee'.
 
     A dbee instance must be accessed from a single thread.
