@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-import datetime
 import time
-import os
 import sys
 from optparse import OptionParser
 from kazoo.client import KazooClient
@@ -24,7 +22,7 @@ def timed(f):
         if msg.find(Operation.NOT_SUPPORT_MSG) != -1:
             print("%s" % msg)
         else:
-            print("%s took %8d ms (%5d/sec)" % \
+            print("%s took %8d ms (%5d/sec)" %
                   (msg, int(elapsed), kwargs["count"] / (elapsed / 1000)))
     return wrapper
 

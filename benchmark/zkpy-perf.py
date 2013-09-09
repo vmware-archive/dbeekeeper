@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-import datetime
 import time
-import os
 import sys
 import zookeeper
 import threading
