@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-import datetime
 import time
-import os
 import sys
 from optparse import OptionParser
 from kazoo.client import KazooClient
@@ -22,10 +20,10 @@ def timed(f):
         msg = f(*args, **kwargs)
         elapsed = (time.time() - start) * 1000
         if msg.find(Operation.NOT_SUPPORT_MSG) != -1:
-            print "%s" % msg
+            print("%s" % msg)
         else:
-            print "%s took %8d ms (%5d/sec)" % \
-                  (msg, int(elapsed), kwargs["count"] / (elapsed / 1000))
+            print("%s took %8d ms (%5d/sec)" %
+                  (msg, int(elapsed), kwargs["count"] / (elapsed / 1000)))
     return wrapper
 
 
@@ -161,14 +159,14 @@ def parse_options(args):
 def main():
     (options, args) = parse_options(sys.argv[1:])
 
-    data = options.znode_data_size * "D"
+    data = options.znode_data_size * b"D"
 
     s = KazooClient(options.server)
     s.start()
 
     if s.exists(options.root_znode):
         children = s.get_children(options.root_znode)
-        print "delete old entries: %d" % len(children)
+        print("delete old entries: %d" % len(children))
         for child in children:
             s.delete("%s/%s" % (options.root_znode, child))
     else:
